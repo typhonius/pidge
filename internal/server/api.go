@@ -122,6 +122,17 @@ func (s *Server) handleMarkUnprocessed(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
+func (s *Server) handleMarkAllProcessed(w http.ResponseWriter, r *http.Request) {
+	n, err := s.store.MarkAllProcessed()
+	if err != nil {
+		slog.Error("marking all processed", "error", err)
+		writeJSON(w, http.StatusInternalServerError, map[string]string{"error": "database error"})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, map[string]any{"status": "ok", "count": n})
+}
+
 // sendRequest is the JSON body for POST /api/send.
 type sendRequest struct {
 	PhoneNumber string `json:"phoneNumber"`

@@ -11,31 +11,63 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var ackServer string
+var (
+	ackServer string
+	ackAll    bool
+)
 
 func init() {
 	ackCmd.Flags().StringVar(&ackServer, "server", "", "pidge server URL (default: derived from webhook_url or http://localhost:3851)")
+	ackCmd.Flags().BoolVar(&ackAll, "all", false, "mark all messages as processed")
 	rootCmd.AddCommand(ackCmd)
 }
 
 var ackCmd = &cobra.Command{
-	Use:   "ack <id>",
+	Use:   "ack [id]",
 	Short: "Mark a message as processed",
-	Long:  "Mark a received message as processed on the pidge server.",
-	Args:  cobra.ExactArgs(1),
+	Long:  "Mark a received message (or all messages with --all) as processed on the pidge server.",
+	Args:  cobra.MaximumNArgs(1),
 	RunE:  runAck,
 }
 
 func runAck(cmd *cobra.Command, args []string) error {
+	if !ackAll && len(args) == 0 {
+		return fmt.Errorf("provide a message id or use --all")
+	}
+
 	base, err := resolveServerURL(ackServer)
 	if err != nil {
 		return err
 	}
 
+	client := &http.Client{Timeout: 10 * time.Second}
+
+	if ackAll {
+		endpoint := fmt.Sprintf("%s/api/messages/processed", strings.TrimRight(base, "/"))
+		resp, err := client.Post(endpoint, "", nil)
+		if err != nil {
+			return fmt.Errorf("reaching pidge server: %w", err)
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			body, _ := io.ReadAll(resp.Body)
+			return fmt.Errorf("server returned %d: %s", resp.StatusCode, string(body))
+		}
+
+		if jsonOutput {
+			body, _ := io.ReadAll(resp.Body)
+			fmt.Println(string(body))
+			return nil
+		}
+
+		fmt.Println("All messages marked as processed.")
+		return nil
+	}
+
 	id := args[0]
 	endpoint := fmt.Sprintf("%s/api/messages/%s/processed", strings.TrimRight(base, "/"), id)
 
-	client := &http.Client{Timeout: 10 * time.Second}
 	resp, err := client.Post(endpoint, "", nil)
 	if err != nil {
 		return fmt.Errorf("reaching pidge server: %w", err)

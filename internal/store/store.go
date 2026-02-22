@@ -196,6 +196,16 @@ func (s *Store) MarkProcessed(id int64) error {
 	return nil
 }
 
+// MarkAllProcessed sets the processed flag on all unprocessed messages.
+func (s *Store) MarkAllProcessed() (int64, error) {
+	res, err := s.db.Exec("UPDATE received_messages SET processed = 1 WHERE processed = 0")
+	if err != nil {
+		return 0, fmt.Errorf("marking all processed: %w", err)
+	}
+	n, _ := res.RowsAffected()
+	return n, nil
+}
+
 // MarkUnprocessed clears the processed flag on a message.
 func (s *Store) MarkUnprocessed(id int64) error {
 	res, err := s.db.Exec("UPDATE received_messages SET processed = 0 WHERE id = ?", id)
