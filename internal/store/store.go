@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS received_messages (
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     processed    BOOLEAN NOT NULL DEFAULT 0
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_dedup ON received_messages(phone_number, message, received_at);
 CREATE INDEX IF NOT EXISTS idx_received_phone ON received_messages(phone_number);
 CREATE INDEX IF NOT EXISTS idx_received_at ON received_messages(received_at);
 CREATE INDEX IF NOT EXISTS idx_processed ON received_messages(processed);
