@@ -1,11 +1,6 @@
-<h1 align="center">
-  <img src="logo.svg" width="40" alt="" valign="middle" />&nbsp;pidge
-</h1>
+# <img src="logo.svg" width="32" alt="" valign="middle" /> pidge
 
-<p align="center">
-  Send and receive SMS from the command line.<br/>
-  A CLI and webhook server for <a href="https://docs.sms-gate.app/">Android SMS Gateway</a>.
-</p>
+Send and receive SMS from the command line. A CLI and webhook server for [Android SMS Gateway](https://docs.sms-gate.app/).
 
 ---
 
