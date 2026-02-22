@@ -8,7 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var unreadOnly bool
+
 func init() {
+	inboxCmd.Flags().BoolVar(&unreadOnly, "unread", false, "only show unprocessed messages")
 	rootCmd.AddCommand(inboxCmd)
 }
 
@@ -31,7 +34,12 @@ func runInbox(cmd *cobra.Command, args []string) error {
 	}
 	defer st.Close()
 
-	messages, err := st.ListMessages(store.ListFilter{Limit: 50})
+	f := store.ListFilter{Limit: 50}
+	if unreadOnly {
+		unread := false
+		f.Processed = &unread
+	}
+	messages, err := st.ListMessages(f)
 	if err != nil {
 		return fmt.Errorf("listing messages: %w", err)
 	}
