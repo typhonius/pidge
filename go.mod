@@ -1,4 +1,4 @@
-module github.com/lobsterclaw/pidge
+module github.com/typhonius/pidge
 
 go 1.24.0
 

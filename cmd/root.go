@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/android-sms-gateway/client-go/smsgateway"
-	"github.com/lobsterclaw/pidge/internal/config"
+	"github.com/typhonius/pidge/internal/config"
 	"github.com/spf13/cobra"
 )
 

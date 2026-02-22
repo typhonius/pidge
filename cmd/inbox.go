@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/android-sms-gateway/client-go/smsgateway"
-	"github.com/lobsterclaw/pidge/internal/store"
+	"github.com/typhonius/pidge/internal/store"
 	"github.com/spf13/cobra"
 )
 

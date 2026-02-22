@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/android-sms-gateway/client-go/smsgateway"
-	"github.com/lobsterclaw/pidge/internal/store"
+	"github.com/typhonius/pidge/internal/store"
 )
 
 func (s *Server) handleListMessages(w http.ResponseWriter, r *http.Request) {

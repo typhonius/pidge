@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/android-sms-gateway/client-go/smsgateway"
-	"github.com/lobsterclaw/pidge/internal/store"
+	"github.com/typhonius/pidge/internal/store"
 )
 
 // Server is the pidge HTTP server handling webhooks and the REST API.

@@ -11,7 +11,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/lobsterclaw/pidge/internal/store"
+	"github.com/typhonius/pidge/internal/store"
 )
 
 // webhookPayload represents the gateway's webhook POST body for sms:received.
