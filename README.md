@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" width="96" alt="pidge" />
+</p>
+
 # pidge
 
 A CLI and webhook server for [Android SMS Gateway](https://docs.sms-gate.app/). Send and receive SMS from the command line, and run a persistent server that captures incoming messages via webhooks.
