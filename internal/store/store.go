@@ -195,6 +195,19 @@ func (s *Store) MarkProcessed(id int64) error {
 	return nil
 }
 
+// MarkUnprocessed clears the processed flag on a message.
+func (s *Store) MarkUnprocessed(id int64) error {
+	res, err := s.db.Exec("UPDATE received_messages SET processed = 0 WHERE id = ?", id)
+	if err != nil {
+		return fmt.Errorf("marking unprocessed: %w", err)
+	}
+	n, _ := res.RowsAffected()
+	if n == 0 {
+		return fmt.Errorf("message %d not found", id)
+	}
+	return nil
+}
+
 // Stats returns summary counts.
 func (s *Store) Stats() (*Stats, error) {
 	var st Stats

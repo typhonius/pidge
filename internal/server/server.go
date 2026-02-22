@@ -40,6 +40,7 @@ func (s *Server) Start(addr, certFile, keyFile string) error {
 	mux.HandleFunc("GET /api/messages", s.handleListMessages)
 	mux.HandleFunc("GET /api/messages/{id}", s.handleGetMessage)
 	mux.HandleFunc("POST /api/messages/{id}/processed", s.handleMarkProcessed)
+	mux.HandleFunc("DELETE /api/messages/{id}/processed", s.handleMarkUnprocessed)
 	mux.HandleFunc("POST /api/send", s.handleSend)
 	mux.HandleFunc("GET /api/health", s.handleHealth)
 
