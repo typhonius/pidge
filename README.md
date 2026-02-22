@@ -1,8 +1,6 @@
-<p align="center">
-  <img src="logo.svg" width="96" alt="pidge" />
-</p>
-
-<h1 align="center">pidge</h1>
+<h1 align="center">
+  <img src="logo.svg" width="40" alt="" valign="middle" />&nbsp;pidge
+</h1>
 
 <p align="center">
   Send and receive SMS from the command line.<br/>
