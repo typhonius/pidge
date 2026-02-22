@@ -54,8 +54,9 @@ func runInbox(cmd *cobra.Command, args []string) error {
 		if m.Processed {
 			status = "+"
 		}
-		fmt.Printf("[%s] %-14s  %s  %s\n",
+		fmt.Printf("[%s] %3d  %-14s  %s  %s\n",
 			status,
+			m.ID,
 			m.PhoneNumber,
 			m.ReceivedAt.Local().Format("2006-01-02 15:04"),
 			body,
